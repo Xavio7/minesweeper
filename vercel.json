@@ -1,10 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "bash scripts/build.sh",
+  "outputDirectory": "dist",
   "trailingSlash": true,
   "redirects": [
-    { "source": "/", "destination": "/v1/", "permanent": false }
+    { "source": "/", "destination": "/v2/", "permanent": false }
   ],
   "rewrites": [
     { "source": "/v1/", "destination": "/v1/base.html" }
+  ],
+  "headers": [
+    {
+      "source": "/v2/pkg/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }]
+    }
   ]
 }
